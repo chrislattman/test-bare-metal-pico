@@ -6,8 +6,12 @@ Instructions:
 - In `~/.bashrc` add `export PICO_SDK_PATH=/path/to/pico-sdk`
 - In the `pico-sdk` folder run `git submodule update --init`
 - Run `sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib`
+- Clone https://github.com/raspberrypi/picotool
+- Run `sudo apt install pkg-config libusb-1.0-0-dev`
+- In the `picotool` folder run `cmake -S . -B build && cmake --build build && sudo cmake --install build`
+- Run `sudo cp udev/60-picotool.rules /etc/udev/rules.d/ && sudo udevadm control --reload`
 
-To build Makefiles: `cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DPICO_BOARD=pico2_w -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ -S . -B build`
+To generate Makefiles: `cmake -DPICO_BOARD=pico2_w -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ -S . -B build`
 
 To build application: `cmake --build build`
 
