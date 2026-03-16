@@ -1,4 +1,4 @@
-# Raspberry Pi Pico 2 W
+# Raspberry Pi Pico 2 and 2 W example
 
 Instructions:
 
@@ -19,6 +19,7 @@ Instructions:
     ```
 
 To generate Makefiles: `cmake -DPICO_BOARD=pico2_w -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ -S . -B build`
+- Change `pico2_w` to `pico2` if building for the Raspberry Pi Pico 2
 
 To build application: `cmake --build build`
 

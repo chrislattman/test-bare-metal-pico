@@ -1,9 +1,13 @@
 #include <hardware/flash.h>
-#include <pico/cyw43_arch.h>
 #include <pico/flash.h>
 #include <pico/stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef CYW43_WL_GPIO_LED_PIN
+#include <pico/cyw43_arch.h>
+#endif
 
 #define XIP_OFFSET (256 * 1024)
 
@@ -29,11 +33,16 @@ int main()
     absolute_time_t next;
 
     stdio_init_all();
+#ifdef CYW43_WL_GPIO_LED_PIN
     status = cyw43_arch_init();
     if (status != PICO_OK) {
         printf("Wi-Fi init failed (this is needed for LED on Pico 2 W)");
         return -1;
     }
+#else
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
+#endif
 
     status = flash_safe_execute(flash_range_erase_callback, (void *)XIP_OFFSET, UINT32_MAX);
     if (status != PICO_OK) {
@@ -58,10 +67,18 @@ int main()
             printf("10 second timer went off\r\n");
             next = make_timeout_time_ms(10000);
         }
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+#ifdef CYW43_WL_GPIO_LED_PIN
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, true);
+#else
+        gpio_put(PICO_DEFAULT_LED_PIN, true);
+#endif
         sleep_ms(1000);
         printf("Hello\r\n");
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+#ifdef CYW43_WL_GPIO_LED_PIN
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, false);
+#else
+        gpio_put(PICO_DEFAULT_LED_PIN, false);
+#endif
         sleep_ms(1000);
         printf("World!\r\n");
     }

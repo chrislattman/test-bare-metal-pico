@@ -10,10 +10,10 @@ set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
 add_executable(blink_led blink_led.c)
-target_link_libraries(blink_led
-    pico_cyw43_arch_none
-    pico_stdlib
-    )
+target_link_libraries(blink_led pico_stdlib)
+if(PICO_BOARD STREQUAL pico2_w)
+target_link_libraries(blink_led pico_cyw43_arch_none)
+endif()
 
 pico_enable_stdio_usb(blink_led 1)
 pico_enable_stdio_uart(blink_led 1)
