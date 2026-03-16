@@ -8,6 +8,7 @@ Instructions:
 - Run `sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib`
 - Clone https://github.com/raspberrypi/picotool
 - Run `sudo apt install pkg-config libusb-1.0-0-dev`
+- In `~/.bashrc` add `export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/"`
 - In the `picotool` folder run 
     ```
     cmake -S . -B build
