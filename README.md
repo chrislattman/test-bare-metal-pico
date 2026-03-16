@@ -27,3 +27,4 @@ To run on board:
 - Unplug USB cable from board
 - Hold down BOOTSEL button while plugging in USB cable
 - Run `cp build/blink_led.uf2 /media/$USER/RP2350` (flashes the board with the .uf2 file)
+    - Alternatively, run `picotool load -u -v -x build/blink_led.elf`
