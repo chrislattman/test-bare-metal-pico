@@ -9,15 +9,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-add_executable(blink_led blink_led.c)
-target_link_libraries(blink_led pico_stdlib)
+add_executable(hello_world hello_world.c)
+target_link_libraries(hello_world pico_stdlib)
 if(PICO_BOARD STREQUAL pico2_w)
-target_link_libraries(blink_led pico_cyw43_arch_none)
+target_link_libraries(hello_world pico_cyw43_arch_none)
 endif()
 
-pico_enable_stdio_usb(blink_led 1)
-pico_enable_stdio_uart(blink_led 1)
-pico_add_extra_outputs(blink_led)
+pico_enable_stdio_usb(hello_world 1)
+pico_enable_stdio_uart(hello_world 1)
+pico_add_extra_outputs(hello_world)
 
 add_compile_options(-Wall
         -Wno-format          # int != int32_t as far as the compiler is concerned because gcc has int32_t as long int
