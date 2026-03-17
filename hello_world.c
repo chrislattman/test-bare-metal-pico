@@ -1,7 +1,6 @@
 #include <hardware/flash.h>
 #include <pico/flash.h>
 #include <pico/stdlib.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
