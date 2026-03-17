@@ -70,8 +70,8 @@ int main()
         }
     }
 
-    next = make_timeout_time_ms(10000);
     add_alarm_in_us(1250000, alarm_callback, NULL, false);
+    next = make_timeout_time_ms(10000);
     while (1) {
         if (time_reached(next)) {
             printf("10 second timer went off\r\n");
