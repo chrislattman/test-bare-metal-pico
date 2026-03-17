@@ -24,6 +24,15 @@ static void flash_range_program_callback(void *param)
     flash_range_program(offset, data, FLASH_PAGE_SIZE);
 }
 
+static int64_t alarm_callback(alarm_id_t id, void *user_data) {
+#ifdef CYW43_WL_GPIO_LED_PIN
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, true);
+#else
+    gpio_put(PICO_DEFAULT_LED_PIN, true);
+#endif
+    return 6000000;
+}
+
 int main()
 {
     int status;
@@ -62,6 +71,7 @@ int main()
     }
 
     next = make_timeout_time_ms(10000);
+    add_alarm_in_us(1250000, alarm_callback, NULL, false);
     while (1) {
         if (time_reached(next)) {
             printf("10 second timer went off\r\n");
