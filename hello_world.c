@@ -44,8 +44,7 @@ int main()
 #ifdef CYW43_WL_GPIO_LED_PIN
     status = cyw43_arch_init();
     if (status != PICO_OK) {
-        printf("Wi-Fi init failed (this is needed for LED on Pico 2 W)");
-        return -1;
+        return status;
     }
 #else
     gpio_init(PICO_DEFAULT_LED_PIN);
@@ -54,14 +53,14 @@ int main()
 
     status = flash_safe_execute(flash_range_erase_callback, (void *)XIP_OFFSET, UINT32_MAX);
     if (status != PICO_OK) {
-        return -1;
+        return status;
     }
     for (size_t i = 0; i < sizeof(write_buffer); i++) {
         write_buffer[i] = (uint8_t)rand();
     }
     status = flash_safe_execute(flash_range_program_callback, params, UINT32_MAX);
     if (status != PICO_OK) {
-        return -1;
+        return status;
     }
     for (size_t i = 0; i < sizeof(write_buffer); i++) {
         if (read_buffer[i] != write_buffer[i]) {
