@@ -68,6 +68,8 @@ int main()
         }
     }
 
+    // The printf calls below use USB CDC (software-emulated serial port using the USB stack) not UART
+    // True UART uses hardware registers which requires a USB-UART adapter/cable
     add_alarm_in_us(1250000, alarm_callback, NULL, false);
     next = make_timeout_time_ms(10000);
     while (1) {
