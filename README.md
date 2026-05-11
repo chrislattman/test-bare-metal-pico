@@ -35,4 +35,4 @@ Debugging notes:
 - To perform true debugging of code running on a Raspberry Pi Pico 2, you would need a [Raspberry Pi Debug Probe](https://www.raspberrypi.com/documentation/microcontrollers/debug-probe.html), a Raspberry Pi Pico 2 with header, and a breadboard, for UART serial
 - Once the necessary hardware is acquired, debugging involves running `openocd` which connects to the CMSIS-DAP debug probe (alternative to J-Link) and exposes a GDB server, and the debug probe communicates to the Pico 2 using SWD (alternative to JTAG)
 - For Rust, `probe-rs` replaces OpenOCD
-- PlatformIO is a convenient ecosystem that bundles a lot of tools together
+- PlatformIO is a beginner-friendly ecosystem that bundles a lot of tools together
