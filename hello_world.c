@@ -52,8 +52,6 @@ int main()
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 #endif
 
-    watchdog_enable(4000, true);
-
     status = flash_safe_execute(flash_range_erase_callback, (void *)XIP_OFFSET, UINT32_MAX);
     if (status != PICO_OK) {
         return status;
@@ -70,6 +68,8 @@ int main()
             return -1;
         }
     }
+
+    watchdog_enable(4000, true);
 
     // The printf calls below use USB CDC (software-emulated serial port using the USB stack) not UART
     // True UART uses hardware registers which requires a USB-UART adapter/cable
