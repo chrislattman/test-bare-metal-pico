@@ -1,4 +1,5 @@
 #include <hardware/flash.h>
+#include <hardware/watchdog.h>
 #include <pico/flash.h>
 #include <pico/stdlib.h>
 #include <stdio.h>
@@ -51,6 +52,8 @@ int main()
     gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 #endif
 
+    watchdog_enable(4000, true);
+
     status = flash_safe_execute(flash_range_erase_callback, (void *)XIP_OFFSET, UINT32_MAX);
     if (status != PICO_OK) {
         return status;
@@ -91,5 +94,6 @@ int main()
 #endif
         sleep_ms(1000);
         printf("World!\r\n");
+        watchdog_update();
     }
 }
