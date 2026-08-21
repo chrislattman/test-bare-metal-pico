@@ -2,10 +2,11 @@
 
 Instructions:
 
-- Clone https://github.com/raspberrypi/pico-sdk
-- In `~/.bashrc` add `export PICO_SDK_PATH=/path/to/pico-sdk`
-- In the `pico-sdk` folder run `git submodule update --init`
-- Run `sudo apt install build-essential cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib`
+- Run `git submodule update --init --recursive`
+- Run `sudo apt install gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib`
+
+If you want to install `picotool` separately:
+
 - Clone https://github.com/raspberrypi/picotool
 - Run `sudo apt install pkg-config libusb-1.0-0-dev`
 - In `~/.bashrc` add `export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/"`
@@ -18,8 +19,18 @@ Instructions:
     sudo udevadm control --reload
     ```
 
-To generate Makefiles: `cmake -DPICO_BOARD=pico2_w -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ -S . -B build`
-- Change `pico2_w` to `pico2` if building for the Raspberry Pi Pico 2
+To generate Makefiles:
+
+```
+PICO_SDK_PATH=$(git rev-parse --show-toplevel)/pico-sdk \
+cmake -DPICO_BOARD=pico2 \
+    -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc \
+    -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ \
+    -DPICOTOOL_FORCE_FETCH_FROM_GIT=ON \
+    -S . -B build
+```
+
+- Change `pico2` to `pico2_w` if building for the Raspberry Pi Pico 2 W
 
 To build application: `cmake --build build`
 
@@ -33,6 +44,8 @@ To run on board:
 Debugging notes:
 
 - To perform true debugging of code running on a Raspberry Pi Pico 2, you would need a [Raspberry Pi Debug Probe](https://www.raspberrypi.com/documentation/microcontrollers/debug-probe.html), a Raspberry Pi Pico 2 with header, and a breadboard, for UART serial
+    - You could use a USB logic analyzer and PulseView to sniff UART messages over the wire
+    - You could use a FT232H adapter (don't need dual-channel FT2232H thanks to debug probe) to drive I2C, SPI, etc. signals from PC to Pico 2
 - Once the necessary hardware is acquired, debugging involves running `openocd` which connects to the CMSIS-DAP debug probe (alternative to J-Link) and exposes a GDB server, and the debug probe communicates to the Pico 2 using SWD (alternative to JTAG)
 - For Rust, `probe-rs` replaces OpenOCD
 - PlatformIO is a beginner-friendly ecosystem that bundles a lot of tools together
