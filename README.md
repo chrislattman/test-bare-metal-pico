@@ -39,7 +39,7 @@ To run on board:
 - Unplug USB cable from board
 - Hold down BOOTSEL button while plugging in USB cable
 - Run `cp build/hello_world.uf2 /media/$USER/RP2350` (flashes the board with the .uf2 file)
-    - Alternatively, run `picotool load -u -v -x build/hello_world.elf`
+    - Alternatively, run `build/_deps/picotool/picotool load -u -v -x build/hello_world.elf`
 
 Debugging notes:
 
