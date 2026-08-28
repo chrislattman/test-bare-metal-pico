@@ -12,6 +12,7 @@ If you want to install `picotool` separately:
 - In `~/.bashrc` add `export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig/"`
 - In the `picotool` folder run 
     ```
+    git checkout 2.3.0
     cmake -S . -B build
     cmake --build build
     sudo cmake --install build
