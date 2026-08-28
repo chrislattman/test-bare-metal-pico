@@ -9,7 +9,9 @@
 #include <pico/cyw43_arch.h>
 #endif
 
-#define XIP_OFFSET (256 * 1024)
+#define XIP_OFFSET (1024 * 1024)
+
+static volatile bool alarm_triggered = false;
 
 static void flash_range_erase_callback(void *param)
 {
@@ -25,11 +27,7 @@ static void flash_range_program_callback(void *param)
 }
 
 static int64_t alarm_callback(alarm_id_t id, void *user_data) {
-#ifdef CYW43_WL_GPIO_LED_PIN
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, true);
-#else
-    gpio_put(PICO_DEFAULT_LED_PIN, true);
-#endif
+    alarm_triggered = true;
     return 6000000;
 }
 
@@ -76,6 +74,14 @@ int main()
     add_alarm_in_us(1250000, alarm_callback, NULL, false);
     next = make_timeout_time_ms(10000);
     while (1) {
+        if (alarm_triggered) {
+            alarm_triggered = false;
+#ifdef CYW43_WL_GPIO_LED_PIN
+            cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, true);
+#else
+            gpio_put(PICO_DEFAULT_LED_PIN, true);
+#endif
+        }
         if (time_reached(next)) {
             printf("10 second timer went off\r\n");
             next = make_timeout_time_ms(10000);
