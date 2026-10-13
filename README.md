@@ -46,5 +46,6 @@ Debugging notes:
     - You could use a USB logic analyzer and PulseView to sniff UART messages over the wire
     - You could use a FT232H adapter (don't need dual-channel FT2232H thanks to debug probe) to drive I2C, SPI, etc. signals from PC to Pico 2
 - Once the necessary hardware is acquired, debugging involves running `openocd` which connects to the CMSIS-DAP debug probe (alternative to J-Link) and exposes a GDB server, and the debug probe communicates to the Pico 2 using SWD (alternative to JTAG)
-- For Rust, `probe-rs` replaces OpenOCD
+    - From a Xilinx perspective, think of `openocd` as the analog to `xsdb` with a built-in `hw_server`
+    - Like `xsdb`, software is loaded through `openocd` via TCL commands and both expose GDB ports
 - PlatformIO is a beginner-friendly ecosystem that bundles a lot of tools together
