@@ -48,4 +48,5 @@ Debugging notes:
 - Once the necessary hardware is acquired, debugging involves running `openocd` which connects to the CMSIS-DAP debug probe (alternative to J-Link) and exposes a GDB server, and the debug probe communicates to the Pico 2 using SWD (alternative to JTAG)
     - From a Xilinx perspective, think of `openocd` as the analog to `xsdb` with a built-in `hw_server`
     - Like `xsdb`, software is loaded through `openocd` via TCL commands and both expose GDB ports
+    - Other vendor-proprietary versions of OpenOCD include NXP's LinkServer and STM's ST-Link
 - PlatformIO is a beginner-friendly ecosystem that bundles a lot of tools together
