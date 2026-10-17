@@ -4,7 +4,7 @@ Instructions:
 
 - Run `git submodule update --init --recursive && git config submodule.pico-sdk.ignore all`
 - Run `sed -i "s/-DPICOTOOL_NO_LIBUSB=1/-DPICOTOOL_NO_LIBUSB=0/g" pico-sdk/tools/Findpicotool.cmake`
-- Run `sudo apt install gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib`
+- Run `sudo apt install gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib gdb-multiarch`
 
 If you want to install `picotool` separately:
 
