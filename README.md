@@ -33,12 +33,15 @@ cmake -DPICO_BOARD=pico2 \
 ```
 
 - Change `pico2` to `pico2_w` if building for the Raspberry Pi Pico 2 W
+- The build type defaults to `MinSizeRel` (`-Os -DNDEBUG`). Add `-DCMAKE_BUILD_TYPE=Debug` to build with `-Og -ggdb3` and, since `NDEBUG` is then undefined, it skips the `sleep_ms()` calls during debugging (switch back with `-DCMAKE_BUILD_TYPE=MinSizeRel`).
 
 To build application and run on board: 
 
 - Unplug USB cable from board
 - Hold down BOOTSEL button while plugging in USB cable
 - Run `cmake --build build --target run`
+
+Other targets: `qemu` runs the firmware in qemu-system-arm with the serial port on telnet localhost 5678, and `qemu_debug` does the same but halts and waits for GDB on localhost:1234 (use it with -DCMAKE_BUILD_TYPE=Debug). See CMakeLists.txt for details.
 
 Debugging notes:
 

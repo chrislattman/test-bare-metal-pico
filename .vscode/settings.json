@@ -2,6 +2,7 @@
     "cmake.configureArgs": [
         "-DPICO_BOARD=pico2_w",
         "-DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc",
-        "-DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++"
+        "-DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++",
+        "-DPICOTOOL_FORCE_FETCH_FROM_GIT=ON"
     ]
 }

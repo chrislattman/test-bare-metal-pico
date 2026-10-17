@@ -67,7 +67,9 @@ int main()
         }
     }
 
-    watchdog_enable(4000, true);
+#ifdef NDEBUG
+    watchdog_enable(4000, true); // not enabled in Debug builds, so pausing in GDB doesn't trigger a reboot
+#endif
 
     // The printf calls below use USB CDC (software-emulated serial port using the USB stack) not UART
     // True UART uses hardware registers which requires a USB-UART adapter/cable
@@ -91,15 +93,21 @@ int main()
 #else
         gpio_put(PICO_DEFAULT_LED_PIN, true);
 #endif
-        sleep_ms(1000);
+#ifdef NDEBUG
+        sleep_ms(1000); // wait 1 second (skipped in Debug builds)
+#endif
         printf("Hello\r\n");
 #ifdef CYW43_WL_GPIO_LED_PIN
         cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, false);
 #else
         gpio_put(PICO_DEFAULT_LED_PIN, false);
 #endif
-        sleep_ms(1000);
+#ifdef NDEBUG
+        sleep_ms(1000); // wait 1 second (skipped in Debug builds)
+#endif
         printf("World!\r\n");
+#ifdef NDEBUG
         watchdog_update();
+#endif
     }
 }
