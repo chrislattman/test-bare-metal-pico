@@ -25,9 +25,7 @@ To generate Makefiles:
 
 ```
 PICO_SDK_PATH=$(git rev-parse --show-toplevel)/pico-sdk
-cmake -DPICO_BOARD=pico2 \
-    -DPICOTOOL_FORCE_FETCH_FROM_GIT=ON \
-    -S . -B build
+cmake -DPICO_BOARD=pico2 -DPICOTOOL_FORCE_FETCH_FROM_GIT=ON -S . -B build
 ```
 
 - Change `pico2` to `pico2_w` if building for the Raspberry Pi Pico 2 W
