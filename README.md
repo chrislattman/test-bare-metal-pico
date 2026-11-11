@@ -26,13 +26,22 @@ To generate Makefiles:
 ```
 PICO_SDK_PATH=$(git rev-parse --show-toplevel)/pico-sdk
 cmake -DPICO_BOARD=pico2 \
-    -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc \
-    -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ \
     -DPICOTOOL_FORCE_FETCH_FROM_GIT=ON \
     -S . -B build
 ```
 
 - Change `pico2` to `pico2_w` if building for the Raspberry Pi Pico 2 W
+- To use a toolchain that isn't on `PATH`, add `-DPICO_TOOLCHAIN_PATH=/path/to/toolchain`
+- To target the RP2350's RISC-V (Hazard3) cores instead of the Cortex-M33 cores:
+    - Install the generic bare-metal [xPack GNU RISC-V Embedded GCC](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases) (`riscv-none-elf`):
+        ```
+        mkdir -p ~/.local/xPacks/riscv-none-elf-gcc
+        curl -L https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v15.2.0-1/xpack-riscv-none-elf-gcc-15.2.0-1-linux-x64.tar.gz \
+            | tar xz -C ~/.local/xPacks/riscv-none-elf-gcc
+        ```
+    - Add `-DPICO_PLATFORM=rp2350-riscv -DPICO_TOOLCHAIN_PATH=$HOME/.local/xPacks/riscv-none-elf-gcc/xpack-riscv-none-elf-gcc-15.2.0-1` (or leave out `PICO_TOOLCHAIN_PATH` if the toolchain's `bin` folder is on `PATH`)
+    - Use a separate build directory (e.g. `-B build-riscv`), since the compiler can't be changed once a build directory is configured
+    - Note: the `qemu` targets are Arm-only and are not defined
 - The build type defaults to `MinSizeRel` (`-Os -DNDEBUG`). Add `-DCMAKE_BUILD_TYPE=Debug` to build with `-Og -ggdb3` and, since `NDEBUG` is then undefined, it skips the `sleep_ms()` calls during debugging (switch back with `-DCMAKE_BUILD_TYPE=MinSizeRel`).
 
 To build application and run on board: 

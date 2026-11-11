@@ -45,6 +45,8 @@ add_custom_target(run
 # QEMU has no RP2350 machine, so the same hello_world.c is also built for mps2-an521 (also a
 # Cortex-M33, so the SDK's compiler flags mostly still apply). It doesn't link the Pico SDK: the
 # headers in qemu/include stand in for the SDK headers, implemented on the AN521 peripherals in qemu/.
+# Only available for the Arm build (PICO_PLATFORM=rp2350-riscv has no QEMU support).
+if(NOT PICO_RISCV)
 add_executable(hello_world_qemu hello_world.c qemu/startup.c qemu/pico_shim.c)
 target_include_directories(hello_world_qemu PRIVATE qemu/include)
 # QEMU's AN521 CPU has no FPU, so override the SDK's -march=...+fp so that no FP instructions are
@@ -83,3 +85,4 @@ add_custom_target(qemu_debug
     USES_TERMINAL
     VERBATIM
 )
+endif()
