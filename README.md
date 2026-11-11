@@ -24,7 +24,7 @@ If you want to install `picotool` separately:
 To generate Makefiles:
 
 ```
-PICO_SDK_PATH=$(git rev-parse --show-toplevel)/pico-sdk \
+PICO_SDK_PATH=$(git rev-parse --show-toplevel)/pico-sdk
 cmake -DPICO_BOARD=pico2 \
     -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-gcc \
     -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/arm-none-eabi-g++ \
